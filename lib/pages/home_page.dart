@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
       print("El cuestionario ha terminado");
       showDialog(
         context: context,
+        barrierDismissible: false, // No cerrar tocando fuera del modal
         builder: (BuildContext context) {
           return AlertDialog(
             title: Row(
@@ -32,12 +33,12 @@ class _HomePageState extends State<HomePage> {
             ),
             content: Text("Has llegado al final del cuestionario"),
             actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Cancelar"),
-              ),
+              // TextButton(
+              //   onPressed: () {
+              //     Navigator.pop(context);
+              //   },
+              //   child: Text("Cancelar"),
+              // ),
               ElevatedButton(
                 onPressed: () {
                   quizbrain.restartQuizz();
@@ -51,6 +52,7 @@ class _HomePageState extends State<HomePage> {
           );
         },
       );
+      return;
     } else {
       quizbrain.nextQuestion();
     }
