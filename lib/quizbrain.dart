@@ -1,6 +1,9 @@
 import 'package:quizzappg15/models/question_model.dart';
 
 class Quizbrain {
+  int questionIndex = 0;
+  bool isFinished = false;
+
   List<QuestionModel> questionList = [
     QuestionModel(question: "¿El hombre llegó a la luna?", answer: true),
     QuestionModel(question: "¿Has cenado hoy?", answer: false),
@@ -10,7 +13,6 @@ class Quizbrain {
     QuestionModel(question: "¿El sol es una estrella?", answer: true),
     QuestionModel(question: "¿Flutter usa Dart?", answer: true),
   ];
-  int questionIndex = 0;
 
   String getQuestionText() {
     return questionList[questionIndex].question;
@@ -21,6 +23,20 @@ class Quizbrain {
   }
 
   void nextQuestion() {
-    questionIndex++;
+    if (questionIndex < questionList.length - 1) {
+      questionIndex++;
+    } else {
+      isFinished = true;
+      print("Se acabaron las preguntas");
+    }
+  }
+
+  bool isFinishedFunc() {
+    return isFinished;
+  }
+
+  void restartQuizz() {
+    questionIndex = 0;
+    isFinished = false;
   }
 }

@@ -14,12 +14,46 @@ class _HomePageState extends State<HomePage> {
     bool correctAnswer = quizbrain.getQuestionAnswer();
     if (userAnswer == correctAnswer) {
       score.add(itemScore((quizbrain.questionIndex + 1).toString(), true));
-      print("La respuesta es CORRECTA");
     } else {
       score.add(itemScore((quizbrain.questionIndex + 1).toString(), false));
-      print("La respuesta es INCORRECTA");
     }
-    quizbrain.nextQuestion();
+    if (quizbrain.isFinishedFunc()) {
+      print("El cuestionario ha terminado");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Row(
+              mainAxisAlignment: .center,
+              children: [
+                Icon(Icons.warning, color: Colors.orange),
+                Text("Alerta"),
+              ],
+            ),
+            content: Text("Has llegado al final del cuestionario"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancelar"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  quizbrain.restartQuizz();
+                  Navigator.pop(context);
+                  score.clear();
+                  setState(() {});
+                },
+                child: Text("Ok"),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      quizbrain.nextQuestion();
+    }
     setState(() {});
   }
 
